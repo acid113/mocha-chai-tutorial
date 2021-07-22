@@ -52,6 +52,17 @@ describe("Testing Star Wars API", () => {
     // expect(list).to.be.not.empty;
   });
 
+  it("Getting a list of characters might throw an error", () => {
+    stub = sinon.stub(axios, "request").throws();
+
+    people
+      .getCharacters()
+      .then()
+      .catch((error) => {
+        expect(error).to.be.instanceOf(Error);
+      });
+  });
+
   it("Gets Luke Skywalker character info", () => {
     stub = sinon
       .stub(axios, "request")
@@ -64,5 +75,16 @@ describe("Testing Star Wars API", () => {
     // * will sometimes fail => missing done()
     // const character = await people.getCharacter(LUKE_SKYWALKER.id);
     // expect(character.name).to.be.equal("Luke Skywalker");
+  });
+
+  it("Getting character data might throw an error", () => {
+    stub = sinon.stub(axios, "request").throws();
+
+    people
+      .getCharacter(LUKE_SKYWALKER.id)
+      .then()
+      .catch((error) => {
+        expect(error).to.be.instanceOf(Error);
+      });
   });
 });
