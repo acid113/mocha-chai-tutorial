@@ -6,9 +6,9 @@ name: Sample CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -28,6 +28,12 @@ jobs:
       # Install dependencies using clean install to avoid package lock updates
       - name: Clean install dependencies
         run: npm ci
-      
+
       - name: Run tests
-        run: npm run test
+        run: npm run coverage
+
+      # Save coverage report in Coveralls
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
