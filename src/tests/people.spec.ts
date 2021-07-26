@@ -2,7 +2,7 @@ import { expect } from "chai";
 import sinon, { SinonStub } from "sinon";
 
 import axios from "axios";
-import * as people from "./../repo/people";
+import * as people from "../repo/people";
 
 const CHARACTER_LIST = {
   results: [
@@ -29,33 +29,30 @@ const LUKE_SKYWALKER = {
   gender: "male",
 };
 
-describe("Testing Star Wars API", () => {
+describe("Testing Star Wars API (Characters)", function () {
   let stub: SinonStub;
 
-  beforeEach(() => {});
+  beforeEach(function () {});
 
-  afterEach(() => {
+  afterEach(function () {
     stub.restore();
   });
 
-  it("Gets a list of characters", () => {
+  it("Gets a list of characters", async function () {
     stub = sinon
       .stub(axios, "request")
       .returns(Promise.resolve({ data: CHARACTER_LIST }));
 
-    people.getCharacters().then((list) => {
+    return people.getCharacters().then(function (list) {
       expect(list).to.be.not.empty;
+      expect(list).to.have.lengthOf(3);
     });
-
-    // * will sometimes fail => missing done()
-    // const list = await people.getCharacters();
-    // expect(list).to.be.not.empty;
   });
 
-  it("Getting a list of characters might throw an error", () => {
+  it("Getting a list of characters might throw an error", function () {
     stub = sinon.stub(axios, "request").throws();
 
-    people
+    return people
       .getCharacters()
       .then()
       .catch((error) => {
@@ -63,27 +60,23 @@ describe("Testing Star Wars API", () => {
       });
   });
 
-  it("Gets Luke Skywalker character info", () => {
+  it("Gets Luke Skywalker character info", function () {
     stub = sinon
       .stub(axios, "request")
       .returns(Promise.resolve({ data: LUKE_SKYWALKER }));
 
-    people.getCharacter(LUKE_SKYWALKER.id).then((character) => {
+    return people.getCharacter(LUKE_SKYWALKER.id).then(function (character) {
       expect(character.name).to.be.equal("Luke Skywalker");
     });
-
-    // * will sometimes fail => missing done()
-    // const character = await people.getCharacter(LUKE_SKYWALKER.id);
-    // expect(character.name).to.be.equal("Luke Skywalker");
   });
 
-  it("Getting character data might throw an error", () => {
+  it("Getting character data might throw an error", function () {
     stub = sinon.stub(axios, "request").throws();
 
-    people
+    return people
       .getCharacter(LUKE_SKYWALKER.id)
       .then()
-      .catch((error) => {
+      .catch(function (error) {
         expect(error).to.be.instanceOf(Error);
       });
   });
