@@ -66,7 +66,7 @@ describe("Testing Star Wars API (Characters)", function () {
       .returns(Promise.resolve({ data: LUKE_SKYWALKER }));
 
     return people.getCharacter(LUKE_SKYWALKER.id).then(function (character) {
-      expect(character.name).to.be.equal("Luke Skywalker");
+      expect(character.name).to.be.equal("Darth Vader");
     });
   });
 
