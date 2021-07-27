@@ -16,24 +16,25 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  pre_build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # this will check out the current branch
-      - uses: actions/checkout@v2
+      - name: Checkout current branch (master)
+        uses: actions/checkout@v2
 
       # Install dependencies using clean install to avoid package lock updates
-      - name: Clean install dependencies
+      - name: Clean install of dependencies
         run: npm ci
-
+  
       - name: Run tests
         run: npm run coverage
 
       # Save coverage report in Coveralls
-      - name: Coveralls
+      - name: Save coverage report in Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
