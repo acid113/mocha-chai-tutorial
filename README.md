@@ -8,3 +8,5 @@ Other libraries
 - [axios](https://github.com/axios/axios) - HTTP requests
 - [sinon.js](http://sinonjs.org/) - mocks
 - [nyc](https://github.com/istanbuljs/nyc) - test coverage
+
+Implemented Github Actions ([Reference](https://michaelzanggl.com/articles/github-actions-ci-setup/))
